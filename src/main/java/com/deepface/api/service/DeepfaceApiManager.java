@@ -17,10 +17,12 @@ public class DeepfaceApiManager {
 	private DeepfaceApiService service;
 	
 	public DeepfaceResponse searchInformation(DeepfaceRequest criteria) throws IOException {
-		DeepfaceResponse response = new DeepfaceResponse();
+		DeepfaceResponse response = null;
 		if(havePicture(criteria)) {
-			criteria.setPicture(criteria.getFile().getBytes());
+			criteria.setPicture(criteria.getPictureMultipath().getBytes());
+			response = service.searchInformation(criteria);
 		}else {
+			response = new DeepfaceResponse();
 			response.setStatus("unsuccess");
 			response.setStatusDetail("Picture not found.");
 		}
@@ -28,11 +30,14 @@ public class DeepfaceApiManager {
 		return response;
 	}
 	
-	public void addInformation(DeepfaceRequest criteria) {
+	public DeepfaceResponse addInformation(DeepfaceRequest criteria) {
+		DeepfaceResponse response = null;
+		response = service.addInformation(criteria);
 		
+		return response;
 	}
 	
 	private boolean havePicture(DeepfaceRequest criteria) throws IOException {
-		return criteria.getFile() != null || !criteria.getFile().isEmpty() || criteria.getFile().getBytes().length != 0;
+		return criteria.getPictureMultipath() != null || !criteria.getPictureMultipath().isEmpty() || criteria.getPictureMultipath().getBytes().length != 0;
 	}
 }

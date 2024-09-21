@@ -9,23 +9,30 @@ public class DeepfaceRequest implements Serializable {
 	private static final long serialVersionUID = 3993701182382987667L;
 	
 	private byte[] picture;
-	private MultipartFile file;
+	private String studentNo;
+	private MultipartFile pictureMultipath;
 	private String name;
 	private String surname;
 	private String nickname;
 	private Integer age;
 	
+	public String getStudentNo() {
+		return studentNo;
+	}
+	public void setStudentNo(String studentNo) {
+		this.studentNo = studentNo;
+	}
 	public byte[] getPicture() {
 		return picture;
 	}
 	public void setPicture(byte[] picture) {
 		this.picture = picture;
 	}
-	public MultipartFile getFile() {
-		return file;
+	public MultipartFile getPictureMultipath() {
+		return pictureMultipath;
 	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
+	public void setPictureMultipath(MultipartFile pictureMultipath) {
+		this.pictureMultipath = pictureMultipath;
 	}
 	public String getName() {
 		return name;

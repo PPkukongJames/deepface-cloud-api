@@ -7,6 +7,7 @@ public class DeepfaceResponse implements Serializable{
 	private static final long serialVersionUID = 376917420412722402L;
 	
 	private byte[] picture;
+	private String studentNo;
 	private String status;
 	private String statusDetail;
 	private String name;
@@ -55,6 +56,12 @@ public class DeepfaceResponse implements Serializable{
 	}
 	public void setAge(Integer age) {
 		this.age = age;
+	}
+	public String getStudentNo() {
+		return studentNo;
+	}
+	public void setStudentNo(String studentNo) {
+		this.studentNo = studentNo;
 	}
 	
 	

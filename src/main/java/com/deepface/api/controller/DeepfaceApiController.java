@@ -27,12 +27,16 @@ public class DeepfaceApiController {
 	
 	@PostMapping(value = "/search",
 			produces = MediaType.APPLICATION_JSON_VALUE,
-			consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,MediaType.APPLICATION_JSON_VALUE}
+			consumes = MediaType.MULTIPART_FORM_DATA_VALUE
 	)
 	public  ResponseEntity<Object> searchInformation(@ModelAttribute DeepfaceRequest criteria) {
 		
 		DeepfaceResponse response = null;
-		
+		try{
+			response = manager.searchInformation(criteria);
+		}catch(Exception e) {
+			
+		}
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -45,6 +49,11 @@ public class DeepfaceApiController {
 		
 		DeepfaceResponse response = null;
 		
+		try{
+			response = manager.addInformation(criteria);
+		}catch(Exception e) {
+			
+		}
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
