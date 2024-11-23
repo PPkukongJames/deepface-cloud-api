@@ -2,31 +2,22 @@ package com.deepface.api.domain;
 
 import java.io.Serializable;
 
-import org.springframework.web.multipart.MultipartFile;
+public class DeepfaceSearchInformation implements Serializable {
 
-public class DeepfaceRequest implements Serializable {
-	
-	private static final long serialVersionUID = 3993701182382987667L;
-	
+	private static final long serialVersionUID = -4322038843148102008L;
+
 	private String studentId;
-	private MultipartFile picture;
 	private String firstName;
 	private String lastName;
 	private String faculty;
 	private String birthDate;
-	private String gpax;
-	private String detail;
+	private String gpaX;
+	private String detailMsg;
 	public String getStudentId() {
 		return studentId;
 	}
 	public void setStudentId(String studentId) {
 		this.studentId = studentId;
-	}
-	public MultipartFile getPicture() {
-		return picture;
-	}
-	public void setPicture(MultipartFile picture) {
-		this.picture = picture;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -52,19 +43,16 @@ public class DeepfaceRequest implements Serializable {
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
-	public String getGpax() {
-		return gpax;
+	public String getGpaX() {
+		return gpaX;
 	}
-	public void setGpax(String gpax) {
-		this.gpax = gpax;
+	public void setGpaX(String gpaX) {
+		this.gpaX = gpaX;
 	}
-	public String getDetail() {
-		return detail;
+	public String getDetailMsg() {
+		return detailMsg;
 	}
-	public void setDetail(String detail) {
-		this.detail = detail;
+	public void setDetailMsg(String detailMsg) {
+		this.detailMsg = detailMsg;
 	}
-
-	
-	
 }

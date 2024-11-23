@@ -1,7 +1,6 @@
 package com.deepface.api.controller;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +14,7 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import com.deepface.api.domain.DeepfaceRequest;
 import com.deepface.api.domain.DeepfaceResponse;
+import com.deepface.api.domain.DeepfaceSearchResponse;
 import com.deepface.api.service.DeepfaceApiManager;
 
 @RequestScope
@@ -29,14 +29,12 @@ public class DeepfaceApiController {
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.MULTIPART_FORM_DATA_VALUE
 	)
-	public  ResponseEntity<Object> searchInformation(@ModelAttribute DeepfaceRequest criteria) {
+	public  ResponseEntity<Object> searchInformation(@ModelAttribute DeepfaceRequest criteria) throws IOException {
+		System.out.println("check");
+		DeepfaceSearchResponse response = null;
 		
-		DeepfaceResponse response = null;
-		try{
-			response = manager.searchInformation(criteria);
-		}catch(Exception e) {
-			
-		}
+		response = manager.searchInformation(criteria);
+		
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

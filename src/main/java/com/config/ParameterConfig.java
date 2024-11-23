@@ -8,6 +8,9 @@ public class ParameterConfig {
 
 	@Value("${deepface.server}")
 	private String deepfaceServer;
+	
+	@Value("${deepface.search}")
+	private String deepfaceSearch;
 
 	public String getDeepfaceServer() {
 		return deepfaceServer;
@@ -15,6 +18,14 @@ public class ParameterConfig {
 
 	public void setDeepfaceServer(String deepfaceServer) {
 		this.deepfaceServer = deepfaceServer;
+	}
+
+	public String getDeepfaceSearch() {
+		return deepfaceSearch;
+	}
+
+	public void setDeepfaceSearch(String deepfaceSearch) {
+		this.deepfaceSearch = deepfaceSearch;
 	}
 	
 	
