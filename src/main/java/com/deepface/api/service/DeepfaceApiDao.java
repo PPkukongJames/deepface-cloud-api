@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.deepface.api.domain.DeepfaceRequest;
 import com.deepface.api.domain.DeepfaceSearchInformation;
 import com.deepface.api.domain.DeepfaceSearchResponse;
 
@@ -63,6 +64,32 @@ public class DeepfaceApiDao {
 		data.setInformation(response);
 		
 		return listDetail;
+	}
+
+	public Boolean addInformation(DeepfaceRequest criteria) {
+		Boolean statusAdd = true;
+		String searchInformation = "SELECT COUNT(studentId) FROM STUDENT_INFORMATION WHERE studentId = ?";
+		int count =  jdbcTemplate.queryForObject(searchInformation, new Object[]{criteria.getStudentId()}, Integer.class);
+		
+		if(count==0) {
+			String insertStudentInfoQuery = "INSERT INTO STUDENT_INFORMATION (studentId, firstName, lastName, faculty, birthDate, gpax) VALUES (?, ?, ?, ?, ?, ?)";
+		
+			String insertDetailQuery = "INSERT INTO DETAIL (studentId, detail) VALUES (?, ?)";
+	    
+			jdbcTemplate.update(insertStudentInfoQuery, criteria.getStudentId(), criteria.getFirstName(), criteria.getLastName(), criteria.getFaculty(), criteria.getBirthDate(), criteria.getGpax());
+
+			jdbcTemplate.update(insertDetailQuery, criteria.getStudentId(), criteria.getDetail());
+		}else {
+			statusAdd = false;
+		}
+		
+		return statusAdd;
+	}
+
+	protected void history(DeepfaceRequest criteria) {
+		String insertDetailQuery = "INSERT INTO DETAIL (studentId, detail) VALUES (?, ?)";
+		
+		jdbcTemplate.update(insertDetailQuery, criteria.getStudentId(), criteria.getDetail());		
 	}
 	
 	

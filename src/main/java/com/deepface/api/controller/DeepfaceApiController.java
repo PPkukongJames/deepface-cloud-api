@@ -9,17 +9,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.deepface.api.domain.DeepfaceRequest;
-import com.deepface.api.domain.DeepfaceResponse;
 import com.deepface.api.domain.DeepfaceSearchResponse;
+import com.deepface.api.domain.DeepfaceUploadResponse;
 import com.deepface.api.service.DeepfaceApiManager;
 
 @RequestScope
 @Controller
-@RequestMapping(value = "/deepface")
+@RequestMapping(value = "/api")
 public class DeepfaceApiController {
 	
 	@Autowired
@@ -27,10 +30,9 @@ public class DeepfaceApiController {
 	
 	@PostMapping(value = "/search",
 			produces = MediaType.APPLICATION_JSON_VALUE,
-			consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+			consumes = MediaType.APPLICATION_JSON_VALUE
 	)
-	public  ResponseEntity<Object> searchInformation(@ModelAttribute DeepfaceRequest criteria) throws IOException {
-		System.out.println("check");
+	public  ResponseEntity<Object> searchInformation(@RequestBody DeepfaceRequest criteria) throws IOException {
 		DeepfaceSearchResponse response = null;
 		
 		response = manager.searchInformation(criteria);
@@ -39,22 +41,61 @@ public class DeepfaceApiController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/add",
+	@PostMapping(value = "/search-line",
 			produces = MediaType.APPLICATION_JSON_VALUE,
-			consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,MediaType.APPLICATION_JSON_VALUE}
+			consumes = MediaType.MULTIPART_FORM_DATA_VALUE
 	)
-	public  ResponseEntity<Object> addInformation(@ModelAttribute DeepfaceRequest criteria) {
+	public  ResponseEntity<Object> searchInformationLine(@ModelAttribute DeepfaceRequest criteria) throws IOException {
+		DeepfaceSearchResponse response = null;
 		
-		DeepfaceResponse response = null;
+		response = manager.searchInformationLine(criteria);
 		
-		try{
-			response = manager.addInformation(criteria);
-		}catch(Exception e) {
-			
-		}
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/add",
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE
+	)
+	public  ResponseEntity<Object> addInformation(@RequestBody DeepfaceRequest criteria)throws IOException {
+		Boolean statusAdd = manager.addInformation(criteria);
+		
+		if(Boolean.FALSE.equals(statusAdd)) {
+			return new ResponseEntity<>(criteria, HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<>(criteria, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/upload",
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+	)
+	public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+		DeepfaceUploadResponse response = null;
+		
+		response = manager.upload(file);
+		
+		System.out.println("upload success");
+		return new ResponseEntity<>(response, HttpStatus.OK);
+		
+	}
+	
+	@PostMapping(value = "/history",
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE
+	)
+	public ResponseEntity<Object> history(@RequestBody DeepfaceRequest criteria) throws IOException {
+		
+		manager.history(criteria);
+		
+		return new ResponseEntity<>(criteria, HttpStatus.OK);
+		
+	}
+	
+	
+	
 	
 	
 

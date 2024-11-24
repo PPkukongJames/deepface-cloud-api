@@ -44,7 +44,7 @@ public class SearchFace {
 		JSONObject json = new JSONObject();
        
         
-		json.put("picture", Base64.encodeBase64String(criteria.getPicture().getBytes()));
+		json.put("picture", Base64.encodeBase64String(criteria.getPicture()));
         
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

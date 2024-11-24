@@ -4,29 +4,38 @@ import java.io.Serializable;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class DeepfaceRequest implements Serializable {
 	
 	private static final long serialVersionUID = 3993701182382987667L;
 	
+	private MultipartFile multipartFile;
+	private byte[] picture;
+	
+	private String tempFile;	
+	private String fileType;
 	private String studentId;
-	private MultipartFile picture;
 	private String firstName;
 	private String lastName;
 	private String faculty;
 	private String birthDate;
 	private String gpax;
 	private String detail;
+	
+	public String getFileType() {
+		return fileType;
+	}
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
 	public String getStudentId() {
 		return studentId;
 	}
 	public void setStudentId(String studentId) {
 		this.studentId = studentId;
-	}
-	public MultipartFile getPicture() {
-		return picture;
-	}
-	public void setPicture(MultipartFile picture) {
-		this.picture = picture;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -64,7 +73,23 @@ public class DeepfaceRequest implements Serializable {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
+	public String getTempFile() {
+		return tempFile;
+	}
+	public void setTempFile(String tempFile) {
+		this.tempFile = tempFile;
+	}
+	public MultipartFile getMultipartFile() {
+		return multipartFile;
+	}
+	public void setMultipartFile(MultipartFile multipartFile) {
+		this.multipartFile = multipartFile;
+	}
+	public byte[] getPicture() {
+		return picture;
+	}
+	public void setPicture(byte[] picture) {
+		this.picture = picture;
+	}
 
-	
-	
 }
