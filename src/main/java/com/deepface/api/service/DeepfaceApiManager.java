@@ -35,6 +35,9 @@ public class DeepfaceApiManager {
 			response = searchInformationAndQuery(criteria);
 		}else {
 			response = new DeepfaceSearchResponse();
+			response.setHaveDetail(false);
+			response.setHaveInformation(false);
+			response.setMatch(false);
 		}
 		
 		return response;
